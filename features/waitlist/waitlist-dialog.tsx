@@ -54,6 +54,7 @@ export function WaitlistDialog({ open, onOpenChange }: WaitlistDialogProps) {
       }
 
       toast.success("You're on the waitlist! We'll be in touch soon.");
+      window.dispatchEvent(new CustomEvent("waitlist:joined"));
       onOpenChange(false);
       setEmail("");
     } catch {

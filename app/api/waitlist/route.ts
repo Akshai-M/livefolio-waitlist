@@ -1,6 +1,12 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { getPrisma } from "@/lib/prisma";
+import { getWaitlistCount } from "@/lib/waitlist";
+
+export async function GET() {
+  const count = await getWaitlistCount();
+  return NextResponse.json({ count });
+}
 
 const bodySchema = z.object({
   email: z.string().trim().email("Enter a valid email address."),

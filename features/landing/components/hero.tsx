@@ -32,16 +32,16 @@ function ResumeToPortfolio() {
       </div>
 
       <div className="folio-wand relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-brand-secondary font-mono text-xs font-bold text-white shadow-[var(--shadow-card)]">
-        →
-      </div>
+          →
+        </div>
 
-      <div className="folio-portfolio absolute right-2 top-1/2 w-[168px] -translate-y-1/2 overflow-hidden rounded-[var(--radius-lg)] border border-border-default bg-surface-base shadow-[var(--shadow-card)]">
-        <div className="h-9 bg-brand-light" />
-        <div className="-mt-4 px-3">
-          <div className="h-8 w-8 rounded-full border-2 border-surface-base bg-brand-primary" />
-          <div className="mt-2 space-y-1.5 pb-3">
-            <div className="h-2 w-2/3 rounded-full bg-text-primary/80" />
-            <div className="h-1.5 w-1/2 rounded-full bg-success" />
+        <div className="folio-portfolio absolute right-2 top-1/2 w-[168px] -translate-y-1/2 overflow-hidden rounded-[var(--radius-lg)] border border-border-default bg-surface-base shadow-[var(--shadow-card)]">
+          <div className="h-9 bg-brand-light" />
+          <div className="-mt-4 px-3">
+            <div className="h-8 w-8 rounded-full border-2 border-surface-base bg-brand-primary" />
+            <div className="mt-2 space-y-1.5 pb-3">
+              <div className="h-2 w-2/3 rounded-full bg-text-primary/80" />
+              <div className="h-1.5 w-1/2 rounded-full bg-success" />
             <div className="mt-2 flex gap-1">
               {integrations.map((platform) => (
                 <span
@@ -76,7 +76,7 @@ export function Hero() {
           <p className="eyebrow uppercase">Resume → portfolio</p>
 
           <h1 className="text-display mt-3 text-balance text-text-primary">
-            Your resume. Your portfolio. Done.
+            Your resume. <br /> Your portfolio. Done.
           </h1>
 
           <p className="prose-measure mx-auto mt-5 text-body-lg text-text-secondary">

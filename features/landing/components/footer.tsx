@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Logo } from "@/components/logo";
 import { siteConfig } from "@/lib/site";
 import { WaitlistButton } from "@/features/waitlist/waitlist-button";
 
@@ -10,11 +10,7 @@ export function Footer() {
     >
       <div className="mx-auto flex max-w-[1200px] flex-col items-center gap-4 text-center sm:flex-row sm:justify-between sm:text-left">
         <div>
-          <Link href="/" aria-label={`${siteConfig.name} home`}>
-            <span className="font-display text-[20px] font-bold text-white">
-              {siteConfig.name}
-            </span>
-          </Link>
+          <Logo variant="light" />
           <p className="mt-2 max-w-sm text-body-sm text-white/60">
             {siteConfig.tagline}
           </p>

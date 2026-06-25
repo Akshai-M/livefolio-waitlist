@@ -19,8 +19,7 @@ const sourceSans = Source_Sans_3({
 
 export const metadata: Metadata = {
   title: `${siteConfig.name} - Build Your Portfolio in Minutes`,
-  description:
-    "Create a beautiful portfolio, deploy it instantly, and share a public link with recruiters. Import from GitHub, LeetCode, and your resume.",
+  description: siteConfig.tagline,
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },

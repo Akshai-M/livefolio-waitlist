@@ -4,6 +4,7 @@ import "./globals.css";
 import { Providers } from "@/components/providers";
 import { Footer } from "@/features/landing/components/footer";
 import { siteConfig } from "@/lib/site";
+import { Analytics } from "@vercel/analytics/next"
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
@@ -37,6 +38,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${sourceSans.variable} ${jetbrainsMono.variable} font-sans antialiased`}>
+        <Analytics />
         <Providers>
           <div className="flex min-h-screen flex-col">
             <div className="flex flex-1 flex-col">{children}</div>

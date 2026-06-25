@@ -11,7 +11,8 @@ export function CTA() {
             Be first to build your portfolio
           </h2>
           <p className="prose-measure mx-auto mt-4 text-body-lg text-text-secondary">
-            Join the waitlist for early access. No credit card required.
+            Join the waitlist for early access. Upload your resume, go live in
+            minutes — then connect integrations to keep it current.
           </p>
           <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
             <WaitlistButton variant="accent" size="lg">

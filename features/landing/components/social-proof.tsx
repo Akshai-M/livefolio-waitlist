@@ -1,38 +1,29 @@
-import { Star } from "lucide-react";
-
-const COMPANIES = ["Google", "Spotify", "Notion", "Stripe", "Figma"];
+import { integrations } from "@/lib/site";
 
 export function SocialProof() {
   return (
     <section
-      aria-label="Social proof"
+      aria-label="Product highlights"
       className="border-y border-border-default bg-surface-raised"
     >
       <div className="mx-auto flex max-w-[1200px] flex-col items-center gap-4 px-6 py-6 text-center md:flex-row md:justify-between md:gap-8 md:text-left">
         <p className="text-body-sm text-text-muted">
-          Trusted by{" "}
-          <span className="font-medium text-text-secondary">
-            10,000+ job seekers
-          </span>
+          Start with your{" "}
+          <span className="font-medium text-text-secondary">resume</span>
           <span className="mx-2 text-border-strong" aria-hidden>
             &middot;
           </span>
-          <span className="inline-flex items-center gap-1 align-middle">
-            <Star
-              className="h-3.5 w-3.5 fill-warning text-warning"
-              aria-hidden
-            />
-            <span className="font-medium text-text-secondary">4.9 rating</span>
-          </span>
+          enrich with{" "}
+          <span className="font-medium text-text-secondary">integrations</span>
         </p>
 
         <ul className="flex flex-wrap items-center justify-center gap-x-7 gap-y-2">
-          {COMPANIES.map((name) => (
+          {integrations.map((platform) => (
             <li
-              key={name}
-              className="font-display text-body-sm font-medium text-text-muted opacity-70 grayscale transition-opacity hover:opacity-100"
+              key={platform.id}
+              className="font-display text-body-sm font-medium text-text-muted opacity-80 transition-opacity hover:opacity-100"
             >
-              {name}
+              {platform.name}
             </li>
           ))}
         </ul>

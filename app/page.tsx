@@ -1,8 +1,8 @@
 import { Hero } from "@/features/landing/components/hero";
 import { SocialProof } from "@/features/landing/components/social-proof";
 import { Features } from "@/features/landing/components/features";
+import { Integrations } from "@/features/landing/components/integrations";
 import { TemplateShowcase } from "@/features/landing/components/template-showcase";
-import { Pricing } from "@/features/landing/components/pricing";
 import { CTA } from "@/features/landing/components/cta";
 import { LandingNav } from "@/features/landing/components/landing-nav";
 
@@ -25,8 +25,8 @@ export default function LandingPage() {
             <Hero />
             <SocialProof />
             <Features />
+            <Integrations />
             <TemplateShowcase />
-            <Pricing />
             <CTA />
           </main>
         </div>

@@ -1,9 +1,12 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  WAITLIST_JOINED_EVENT,
+  type WaitlistJoinedDetail,
+} from "@/lib/waitlist-events";
 
-const POLL_MS = 45_000;
-const JOIN_EVENT = "waitlist:joined";
+const POLL_MS = 10_000;
 
 function easeOutCubic(t: number) {
   return 1 - (1 - t) ** 3;
@@ -29,7 +32,7 @@ export function WaitlistCounter({ initialCount }: WaitlistCounterProps) {
 
   const refreshCount = useCallback(async () => {
     try {
-      const res = await fetch("/api/waitlist");
+      const res = await fetch("/api/waitlist", { cache: "no-store" });
       if (!res.ok) return;
       const data = (await res.json()) as { count?: number };
       if (typeof data.count === "number") {
@@ -91,17 +94,37 @@ export function WaitlistCounter({ initialCount }: WaitlistCounterProps) {
   }, [target]);
 
   useEffect(() => {
-    const onJoined = () => {
+    const onJoined = (event: Event) => {
+      const detail = (event as CustomEvent<WaitlistJoinedDetail>).detail;
+      if (typeof detail?.count === "number") {
+        setTarget(detail.count);
+        return;
+      }
       void refreshCount();
     };
 
-    window.addEventListener(JOIN_EVENT, onJoined);
+    const syncWhenVisible = () => {
+      if (document.visibilityState === "visible") {
+        void refreshCount();
+      }
+    };
+
+    window.addEventListener(WAITLIST_JOINED_EVENT, onJoined);
+    window.addEventListener("focus", syncWhenVisible);
+    document.addEventListener("visibilitychange", syncWhenVisible);
+
+    void refreshCount();
+
     const interval = window.setInterval(() => {
-      void refreshCount();
+      if (document.visibilityState === "visible") {
+        void refreshCount();
+      }
     }, POLL_MS);
 
     return () => {
-      window.removeEventListener(JOIN_EVENT, onJoined);
+      window.removeEventListener(WAITLIST_JOINED_EVENT, onJoined);
+      window.removeEventListener("focus", syncWhenVisible);
+      document.removeEventListener("visibilitychange", syncWhenVisible);
       window.clearInterval(interval);
     };
   }, [refreshCount]);

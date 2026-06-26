@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { dispatchWaitlistJoined } from "@/lib/waitlist-events";
+import { getWaitlistEmailError } from "@/lib/waitlist-schema";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -22,11 +24,38 @@ interface WaitlistDialogProps {
 
 export function WaitlistDialog({ open, onOpenChange }: WaitlistDialogProps) {
   const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+
+  function handleOpenChange(nextOpen: boolean) {
+    if (!nextOpen) {
+      setEmailError(null);
+    }
+    onOpenChange(nextOpen);
+  }
+
+  function handleEmailChange(value: string) {
+    setEmail(value);
+    if (emailError) {
+      setEmailError(getWaitlistEmailError(value));
+    }
+  }
+
+  function handleEmailBlur() {
+    if (email.trim()) {
+      setEmailError(getWaitlistEmailError(email));
+    }
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!email.trim() || submitting) return;
+    if (submitting) return;
+
+    const validationError = getWaitlistEmailError(email);
+    if (validationError) {
+      setEmailError(validationError);
+      return;
+    }
 
     setSubmitting(true);
     try {
@@ -38,6 +67,7 @@ export function WaitlistDialog({ open, onOpenChange }: WaitlistDialogProps) {
 
       const data = (await res.json()) as {
         status?: "created" | "exists";
+        count?: number;
         error?: string;
       };
 
@@ -48,14 +78,14 @@ export function WaitlistDialog({ open, onOpenChange }: WaitlistDialogProps) {
 
       if (data.status === "exists") {
         toast.info("You're already on the waitlist.");
-        onOpenChange(false);
+        handleOpenChange(false);
         setEmail("");
         return;
       }
 
       toast.success("You're on the waitlist! We'll be in touch soon.");
-      window.dispatchEvent(new CustomEvent("waitlist:joined"));
-      onOpenChange(false);
+      dispatchWaitlistJoined(data.count);
+      handleOpenChange(false);
       setEmail("");
     } catch {
       toast.error("Something went wrong. Please try again.");
@@ -65,7 +95,7 @@ export function WaitlistDialog({ open, onOpenChange }: WaitlistDialogProps) {
   }
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Join the waitlist</DialogTitle>
@@ -82,11 +112,25 @@ export function WaitlistDialog({ open, onOpenChange }: WaitlistDialogProps) {
               type="email"
               placeholder="you@example.com"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => handleEmailChange(e.target.value)}
+              onBlur={handleEmailBlur}
               required
               autoComplete="email"
               disabled={submitting}
+              aria-invalid={emailError ? true : undefined}
+              aria-describedby={
+                emailError ? "waitlist-email-error" : undefined
+              }
             />
+            {emailError ? (
+              <p
+                id="waitlist-email-error"
+                role="alert"
+                className="text-body-sm text-danger"
+              >
+                {emailError}
+              </p>
+            ) : null}
           </div>
 
           <DialogFooter>

@@ -1,21 +1,22 @@
 import { NextResponse } from "next/server";
-import { z } from "zod";
 import { getPrisma } from "@/lib/prisma";
+import { waitlistEmailSchema } from "@/lib/waitlist-schema";
 import { getWaitlistCount } from "@/lib/waitlist";
+
+export const dynamic = "force-dynamic";
 
 export async function GET() {
   const count = await getWaitlistCount();
-  return NextResponse.json({ count });
+  return NextResponse.json(
+    { count },
+    { headers: { "Cache-Control": "no-store, max-age=0" } },
+  );
 }
-
-const bodySchema = z.object({
-  email: z.string().trim().email("Enter a valid email address."),
-});
 
 export async function POST(request: Request) {
   try {
     const json = await request.json();
-    const parsed = bodySchema.safeParse(json);
+    const parsed = waitlistEmailSchema.safeParse(json);
 
     if (!parsed.success) {
       return NextResponse.json(
@@ -36,8 +37,9 @@ export async function POST(request: Request) {
     }
 
     await prisma.waitlistEntry.create({ data: { email } });
+    const count = await getWaitlistCount();
 
-    return NextResponse.json({ status: "created" as const });
+    return NextResponse.json({ status: "created" as const, count });
   } catch {
     return NextResponse.json(
       { error: "Something went wrong. Please try again." },

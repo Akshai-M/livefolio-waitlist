@@ -7,21 +7,29 @@ import { cn } from "@/lib/utils";
 const SHOWCASE_TEMPLATES = [
   {
     id: "modern",
+    name: "Modern",
+    src: "/templates/modern.png",
     alt: "Modern portfolio layout",
     gradient: "from-violet-500/50 to-cyan-400/40",
   },
   {
     id: "retro",
+    name: "Retro",
+    src: "/templates/retro.png",
     alt: "Retro portfolio layout",
     gradient: "from-[#ff90e8]/80 to-[#ffc900]/80",
   },
   {
     id: "blueprint",
+    name: "Blueprint",
+    src: "/templates/blueprint.png",
     alt: "Blueprint portfolio layout",
     gradient: "from-[#003366] to-[#002244]",
   },
   {
     id: "minimal",
+    name: "Minimal",
+    src: "/templates/minimal.png",
     alt: "Minimal portfolio layout",
     gradient: "from-stone-100 to-stone-200",
   },
@@ -48,7 +56,6 @@ function TemplatePreview({
   template: (typeof SHOWCASE_TEMPLATES)[number];
 }) {
   const [imageFailed, setImageFailed] = useState(false);
-  const src = `/templates/${template.id}.webp`;
 
   if (imageFailed) {
     return <GradientPlaceholder gradient={template.gradient} />;
@@ -57,7 +64,7 @@ function TemplatePreview({
   return (
     <div className="relative aspect-4/3 overflow-hidden rounded-2xl border border-border-default bg-surface-sunken">
       <Image
-        src={src}
+        src={template.src}
         alt={template.alt}
         fill
         className="object-cover object-top"
@@ -78,6 +85,9 @@ function ShowcaseCard({
       <div className="p-3">
         <TemplatePreview template={template} />
       </div>
+      <p className="border-t border-border-default px-4 py-3 text-center text-h3 text-text-primary">
+        {template.name}
+      </p>
     </div>
   );
 }

@@ -117,11 +117,6 @@
   --color-danger: #d84332;
   --color-danger-bg: #fef0ee;
 
-  /* Fixed marketing footer (does not swap in dark mode) */
-  --color-footer-bg: #2a2744;
-  --color-footer-text: rgba(255, 255, 255, 0.6);
-  --color-footer-heading: #ffffff;
-
   /* Spacing scale (8px rhythm) */
   --space-1: 4px;
   --space-2: 8px;

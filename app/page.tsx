@@ -1,6 +1,6 @@
 import { Hero } from "@/features/landing/components/hero";
-import { WaitlistCountSection } from "@/features/landing/components/waitlist-count-section";
-import { SocialProof } from "@/features/landing/components/social-proof";
+// import { WaitlistCountSection } from "@/features/landing/components/waitlist-count-section";
+// import { SocialProof } from "@/features/landing/components/social-proof";
 import { Features } from "@/features/landing/components/features";
 import { Integrations } from "@/features/landing/components/integrations";
 import { TemplateShowcase } from "@/features/landing/components/template-showcase";
@@ -24,8 +24,8 @@ export default function LandingPage() {
 
           <main id="main">
             <Hero />
-            <SocialProof />
-            <WaitlistCountSection />
+            {/* <SocialProof /> */}
+            {/* <WaitlistCountSection /> */}
             <Features />
             <Integrations />
             <TemplateShowcase />
